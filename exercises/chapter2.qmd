@@ -1,0 +1,217 @@
+---
+title: "Chapter 2: Multi-Factor Models"
+author: "Orville Hombrebueno"
+format: html
+editor: visual
+---
+
+In this chapter, you will expand your skills in lavaan to creating multi-factor models. We will improve the one-factor models from the last chapter by creating multiple latent variables in the classic Holzinger and Swineford (1939) dataset.
+
+# Create a Zero df Model
+
+In the first chapter, we created a model of text-speed from the `HolzingerSwineford1939` dataset with six manifest variables `x4`, `x5`, `x6`, `x7`, `x8`, `x9`. Create a model of only reading comprehension with `x4`, `x5`, and `x6`.
+
+This model should have zero degrees of freedom because it is not identified, as we are estimating as many parameters as we have options with only three manifest variables. Analyze the model to find zero degrees of freedom. `lavaan` and the `HolzingerSwineford1939` dataset have been loaded for you.
+
+::: {.callout-note icon=false}
+
+## Instructions
+
+- Name your model `text.model` and your latent variable `text`.
+- Use variables `x4`, `x5`, and `x6` as the manifest variables.
+- Use the `cfa()` function to analyze the model.
+- Use the `summary()` function to view the degrees of freedom.
+
+:::
+
+# Fix the Zero df Model
+
+Identification is a core component in SEM models and you should have at least one degree of freedom for any model. Using the `text.model` from the last exercise, update the model to create a degree of freedom.
+
+You should label two of the coefficient paths to `a` to set them equal to each other. `lavaan` and the `HolzingerSwineford1939` dataset have been loaded for you.
+
+::: {.callout-note icon=false}
+
+## Instructions
+
+- Update the `text.model` to have `x5` and `x6` paths both set to `a`.
+- Analyze the model with the `cfa()` function.
+- View the updated model with the `summary()` function.
+
+:::
+
+# Build a Multi-Factor Model
+
+Another way to improve our text-speed model would be to create a two-factor model with `text` and `speed` as latent variables, rather than split the model into two one-factor models. In this exercise, write the model specification code for a two-factor model.
+
+If you want to view the dataset to see the columns, you can use `head(HolzingerSwineford1939)`.
+
+::: {.callout-note icon=false}
+
+## Instructions
+
+- Name your model `twofactor.model`.
+- Use `x4`, `x5`, and `x6` to create a `text` latent variable.
+- Use `x7`, `x8`, and `x9` to create a `speed` latent variable.
+
+:::
+
+# Summarize the Multi-Factor Model
+
+You have now created a two-factor model of the reading comprehension and speeded addition factors. Is that better than a one-factor model? Use the `cfa()` and `summary()` functions on your new two-factor model of the `HolzingerSwineford1939` dataset to show the fit indices.
+
+::: {.callout-note icon=false}
+
+## Instructions
+
+- Save your model fit as `twofactor.fit` using the `cfa()` function.
+- Use the `summary()` function to view the fitted model.
+- Compare the fit indices from the one-factor model to the updated model.
+
+:::
+
+#Three-Factor Model with Zero Correlation
+
+In this exercise, you will use the Eysenck Personality Inventory dataset from the `psychTools` library to create a three-factor model of personality. This inventory includes 57 questions that measure extraversion, neuroticism, and lying.
+
+Let's create a three factor model using the latent variables: `extraversion`, `neuroticism`, and `lying` with four manifest variables on each item. Remember when you create multiple latent variables, these endogenous variables are automatically correlated. Set the correlation between the `extraversion` latent variable and `neuroticism` latent variable to zero, by using the `~~` in model specification code.
+
+::: {.callout-note icon=false}
+
+## Instructions 1/3
+
+- Create a lying factor including items `V6`, `V12`, `V18`, and `V24`.
+- Set the correlation between `extraversion` and `neuroticism` to zero (in that order).
+
+:::
+
+::: {.callout-note icon=false}
+
+## Instructions 2/3
+
+Analyze the three-factor model with the `cfa()` function.
+
+:::
+
+::: {.callout-note icon=false}
+
+## Instructions 3/3
+
+Summarize the three-factor model and look for the zero-correlation you set in the model specification.
+
+:::
+
+# Create a Direct Path
+
+In this exercise, edit the `epi.model` to include a direct regression path between `lying` and `neuroticism`. We might expect that a person's level of neuroticism would predict their level of lying.
+
+You can edit the model specification provided to include this path, and you can use the same model specification code that you might use when defining a regression in `lm`.
+
+::: {.callout-note icon=false}
+
+## Instructions 1/3
+
+Add a new line to the model specification code where lying is predicted by neuroticism.
+
+:::
+
+::: {.callout-note icon=false}
+
+## Instructions 2/3
+
+Complete the `cfa()` function to analyze your new model.
+
+:::
+
+::: {.callout-note icon=false}
+
+## Instructions 3/3
+
+Summarize the new model to see that the output has changed to a regression.
+
+:::
+
+# Check Model Variance
+
+In order to evaluate your three-factor model of the `epi`, you can examine the variance of the manifest variables to check for potential problems with the model. Very large variances can indicate potential issues; however, this value should be compared to the original scale of the data.
+
+Use the `var()` function on `V1` to compare the variance of the original manifest variable to the estimated variance in your summary output. The libraries, model, and datasets have been loaded for you.
+
+::: {.callout-note icon=false}
+
+## Instructions
+
+- Use `var()` on `V1` to calculate the variance of the original manifest variable in the `epi` dataset.
+- Compare this value to the `V1` variance estimate of the model.
+
+:::
+
+# Examine Modification Indices
+
+The fit indices for our `epi.model` are low (in the .70s) for CFI and TLI. You can use modification indices to find potential parameters (paths) to add to the model specification to improve model fit.
+
+Examine the modification indices for the `epi.model` and add the path with the largest `mi` to your model. The libraries and model have been loaded for you. After you edit your model, rerun the model summary to examine the change in fit indices.
+
+::: {.callout-note icon=false}
+
+## Instructions 1/3
+
+- Use `modificationindices()` on the `epi.fit` to find the `mi` values.
+- Use `sort = TRUE` to see the highest values first.
+
+:::
+
+::: {.callout-note icon=false}
+
+## Instructions 2/3
+
+- Update the model specification code to include the largest `mi` value.
+
+:::
+
+::: {.callout-note icon=false}
+
+## Instructions 3/3
+
+- Reanalyze the model with the updated model specification to see how your fit indices improved.
+- Use `epi.model2` from the previous step as your model name.
+
+:::
+
+# Compare Two Models
+
+In the last exercises, you created two models of the `epi`, and these models have been loaded for you.
+
+The original model `epi.model` and the updated model with the modified path `epi.model1` can now be compared using the `anova()` function to determine if the change in fit indices was a large change. We can use the `anova()` function because these models are nested, which means they are the same manifest variables with different parameters.
+
+::: {.callout-note icon=false}
+
+## Instructions
+
+- Analyze both models with the `cfa()` function and the `epi` dataset.
+- Use the `anova()` function to compare these models.
+
+:::
+
+# Select Specific Fit Indices
+
+You can also compare models by using the AIC or ECVI fit indices, rather than the `anova()` function. These fit indices are very useful if your models include different manifest variables. When comparing sets of AIC or ECVI values, the best model would have the smallest fit index. The saved models from the previous exercise have been loaded for you.
+
+::: {.callout-note icon=false}
+
+## Instructions
+
+- Use `fitmeasures()` to calculate the fit indices for each model separately.
+- Select only the `aic` and `ecvi` fit indices to shorten the output.
+
+:::
+
+
+
+
+
+
+
+
+
+
