@@ -13,11 +13,15 @@ Let's practice defining models. Remember to name your latent variables with a na
 
 Use the `HolzingerSwineford1939` dataset to create a new model of textual speed with the variables `x4`, `x5`, and `x6`, which represent reading comprehension and understanding word meaning. `x7`, `x8`, and `x9` represent speed counting and addition. The model will have one latent variable that predicts scores on these six manifest variables.
 
+::: {.callout-note icon=false}
+
 ## Instructions
 
-- Name your model `text.model`.
-- Name your latent variable `textspeed`.
-- Use variables `x4`, `x5`, `x6`, `x7`, `x8`, and `x9` as the manifest variables.
+-   Name your model `text.model`.
+-   Name your latent variable `textspeed`.
+-   Use variables `x4`, `x5`, `x6`, `x7`, `x8`, and `x9` as the manifest variables.
+
+:::
 
 # Build Political Democracy Model
 
@@ -25,11 +29,15 @@ You can now expand your model specification skills to a new dataset. Create a mo
 
 Variables `y1`, `y2`, `y3`, and `y4` measure freedom of the press, freedom of political opposition, election fairness, and effectiveness of the legislature. You should create a model with one latent variable, named `poldemo60`, and four manifest variables.
 
+::: {.callout-note icon=false}
+
 ## Instructions
 
-- Name your model `politics.model`.
-- Name your latent variable `poldemo60`.
-- Use variables `y1`, `y2`, `y3`, and `y4` as the manifest variables.
+-   Name your model `politics.model`.
+-   Name your latent variable `poldemo60`.
+-   Use variables `y1`, `y2`, `y3`, and `y4` as the manifest variables.
+
+:::
 
 # Analyze Text Speed Model
 
@@ -37,10 +45,14 @@ Let's analyze your text speed model from the first lesson. This model included o
 
 We will use the `cfa()` function to analyze `text.model` using the data from `HolzingerSwineford1939`. Our summary should indicate the model was identified with 9 degrees of freedom. You should examine the latent variable estimates to determine which items measure the latent variable well (high scores) and which do not (low scores).
 
+::: {.callout-note icon=false}
+
 ## Instructions
 
-- Use the `cfa()` function to fit a model called `text.fit`. Remember to include both model and data arguments!
-- Use the `summary()` function to view the model fit.
+-   Use the `cfa()` function to fit a model called `text.fit`. Remember to include both model and data arguments!
+-   Use the `summary()` function to view the model fit.
+
+:::
 
 # Summarize Political Democracy
 
@@ -56,11 +68,15 @@ You have created and summarized the text-speed model in previous steps using the
 
 In this exercise, add the `standardized = TRUE` argument to your `summary()` function to view the standardized loadings. Look at the `Std.all` column for the completely standardized solution to see which variables have a poor relationship to the text speed latent variable.
 
+::: {.callout-note icon=false}
+
 ## Instructions
 
-- Use the `summary()` function on your `text.fit` model.
-- Include the argument to view the standardized loadings.
-- Do not include `fit.measures` arguments in this exercise.
+-   Use the `summary()` function on your `text.fit` model.
+-   Include the argument to view the standardized loadings.
+-   Do not include `fit.measures` arguments in this exercise.
+
+:::
 
 # Explore Fit Indices
 
@@ -68,11 +84,15 @@ After reviewing the standardized loadings in the previous exercise, we found tha
 
 Remember that goodness of fit statistics, like the CFI and TLI, should be large (over .90) and close to one, while badness of fit measures like the RMSEA and SRMR should be small (less than .10) and close to zero.
 
+::: {.callout-note icon=false}
+
 ## Instructions
 
-- Use the `summary()` function on your `text.fit` model.
-- Include the argument to view the fit indices.
-- Do not include the standardized loadings.
+-   Use the `summary()` function on your `text.fit` model.
+-   Include the argument to view the fit indices.
+-   Do not include the standardized loadings.
+
+:::
 
 # Examine Political Democracy
 
@@ -80,7 +100,11 @@ For this final exercise, you will put together all the steps you've completed so
 
 In the `Std.all` column for loadings, you should find that the items appear to measure political democracy well with high numbers close to one. However, when you look at the fit indices, you should find a mix of good and bad values. These results are often common and indicate that the model may fit the data, but also has room for improvement.
 
+::: {.callout-note icon=false}
+
 ## Instructions
 
-- Use the `summary()` function on your `politics.fit` model.
-- Include the argument to view both standardized loadings and fit indices.
+-   Use the `summary()` function on your `politics.fit` model.
+-   Include the argument to view both standardized loadings and fit indices.
+
+:::
