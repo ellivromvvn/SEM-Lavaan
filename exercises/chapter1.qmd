@@ -1,0 +1,86 @@
+---
+title: "Chapter 1: One-Factor Models"
+author: "Orville Hombrebueno"
+format: html
+editor: visual
+---
+
+In this chapter, you will dive into creating your first structural equation model with lavaan. You will learn important terminology, how to build, and run models. You will create a one-factor model of mental test abilities using the classic Holzinger and Swineford (1939) dataset.
+
+# Build Text Speed Model
+
+Let's practice defining models. Remember to name your latent variables with a name that is not in your current dataset. However, manifest variables should be column names from your dataset.
+
+Use the `HolzingerSwineford1939` dataset to create a new model of textual speed with the variables `x4`, `x5`, and `x6`, which represent reading comprehension and understanding word meaning. `x7`, `x8`, and `x9` represent speed counting and addition. The model will have one latent variable that predicts scores on these six manifest variables.
+
+## Instructions
+
+- Name your model `text.model`.
+- Name your latent variable `textspeed`.
+- Use variables `x4`, `x5`, `x6`, `x7`, `x8`, and `x9` as the manifest variables.
+
+# Build Political Democracy Model
+
+You can now expand your model specification skills to a new dataset. Create a model of Political Democracy ratings from 1960 using the `PoliticalDemocracy` dataset. This dataset includes ratings of politics in developing countries from the 1960s.
+
+Variables `y1`, `y2`, `y3`, and `y4` measure freedom of the press, freedom of political opposition, election fairness, and effectiveness of the legislature. You should create a model with one latent variable, named `poldemo60`, and four manifest variables.
+
+## Instructions
+
+- Name your model `politics.model`.
+- Name your latent variable `poldemo60`.
+- Use variables `y1`, `y2`, `y3`, and `y4` as the manifest variables.
+
+# Analyze Text Speed Model
+
+Let's analyze your text speed model from the first lesson. This model included one latent variable, `textspeed`, represented by six manifest variables. Variables `x4`, `x5`, `x6` measured reading comprehension, and `x7`, `x8`, and `x9` measured speed counting and addition from the `HolzingerSwineford1939` dataset.
+
+We will use the `cfa()` function to analyze `text.model` using the data from `HolzingerSwineford1939`. Our summary should indicate the model was identified with 9 degrees of freedom. You should examine the latent variable estimates to determine which items measure the latent variable well (high scores) and which do not (low scores).
+
+## Instructions
+
+- Use the `cfa()` function to fit a model called `text.fit`. Remember to include both model and data arguments!
+- Use the `summary()` function to view the model fit.
+
+# Summarize Political Democracy
+
+Using the `PoliticalDemocracy` dataset, you created a model that measured political democracy from the 1960s. `y1`, `y2`, `y3`, and `y4` measured political and press freedoms, election fairness, and legislature effectiveness. `y1` was our indicator variable used to scale the data.
+
+It is also important to examine model variances, which indicate the size of error in estimating manifest or latent variables. Use the `summary()` function on `politics.fit` to display the coefficients and variances for the model.
+
+Look at the `Estimates` column. Which item has the largest error term in the `Variances` output? (`y1`, `y2`, `y3`, `y4`)
+
+# Examine Standardized Loadings
+
+You have created and summarized the text-speed model in previous steps using the `HolzingerSwineford1939` dataset. You were able to view the coefficients for the model using the `summary()` function. However, the unstandardized coefficients in the `Estimate` column are often hard to interpret for how well they represent the latent variable.
+
+In this exercise, add the `standardized = TRUE` argument to your `summary()` function to view the standardized loadings. Look at the `Std.all` column for the completely standardized solution to see which variables have a poor relationship to the text speed latent variable.
+
+## Instructions
+
+- Use the `summary()` function on your `text.fit` model.
+- Include the argument to view the standardized loadings.
+- Do not include `fit.measures` arguments in this exercise.
+
+# Explore Fit Indices
+
+After reviewing the standardized loadings in the previous exercise, we found that several of the manifest variables may not represent our latent variable well. As a second measure of our model, you can examine the fit indices to see if the model appropriately fits the data. You can look at both the goodness of fit and badness of fit statistics using the `fit.measures` argument within the `summary()` function.
+
+Remember that goodness of fit statistics, like the CFI and TLI, should be large (over .90) and close to one, while badness of fit measures like the RMSEA and SRMR should be small (less than .10) and close to zero.
+
+## Instructions
+
+- Use the `summary()` function on your `text.fit` model.
+- Include the argument to view the fit indices.
+- Do not include the standardized loadings.
+
+# Examine Political Democracy
+
+For this final exercise, you will put together all the steps you've completed so far in building a one-factor model. You will examine the standardized loadings and fit indices for the political democracy model. The model was analyzed with the `cfa()` function. You will now use the `summary()` function with both the `standardized` and `fit.measures` arguments to view everything together.
+
+In the `Std.all` column for loadings, you should find that the items appear to measure political democracy well with high numbers close to one. However, when you look at the fit indices, you should find a mix of good and bad values. These results are often common and indicate that the model may fit the data, but also has room for improvement.
+
+## Instructions
+
+- Use the `summary()` function on your `politics.fit` model.
+- Include the argument to view both standardized loadings and fit indices.
