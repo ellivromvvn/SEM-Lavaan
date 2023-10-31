@@ -1,0 +1,8 @@
+---
+title: "Chapter 3: Troubleshooting Model Errors and Diagrams"
+author: "Orville Hombrebueno"
+format: html
+editor: visual
+---
+
+Structural equation models do not always run smoothly, and in this chapter, you will learn how to troubleshoot Heywood cases which are common errors. You will also learn how to diagram your model in R using the semPlot library.
