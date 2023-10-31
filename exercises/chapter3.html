@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.433">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Orville Hombrebueno">
+
+<title>Chapter 3: Troubleshooting Model Errors and Diagrams</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="chapter3_files/libs/clipboard/clipboard.min.js"></script>
+<script src="chapter3_files/libs/quarto-html/quarto.js"></script>
+<script src="chapter3_files/libs/quarto-html/popper.min.js"></script>
+<script src="chapter3_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="chapter3_files/libs/quarto-html/anchor.min.js"></script>
+<link href="chapter3_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="chapter3_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="chapter3_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="chapter3_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="chapter3_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+
+
+</head>
+
+<body class="fullcontent">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Chapter 3: Troubleshooting Model Errors and Diagrams</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Orville Hombrebueno </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<p>Structural equation models do not always run smoothly, and in this chapter, you will learn how to troubleshoot Heywood cases which are common errors. You will also learn how to diagram your model in R using the semPlot library.</p>
+<section id="analyze-a-latent-heywood-case" class="level1">
+<h1>Analyze a Latent Heywood Case</h1>
+<p>A local animal shelter has designed a survey to measure the impact of their Adopt Me program. Viewers rated each dog’s picture, background story, and other characteristics to indicate the “adoptableness” of each animal.</p>
+<p>The <code>adoptsurvey</code> data contains the six items they rated including <code>pictures</code>, <code>background</code>, <code>loveskids</code> that measure a “good story” latent variable, while <code>energy</code>, <code>wagstail</code>, <code>playful</code> measure an “in person” latent variable. You will build a two-factor model of their survey and examine it for Heywood cases. The <code>lavaan</code> library has been loaded for you.</p>
+<div class="callout callout-style-default callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Instructions
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>The <code>goodstory</code> latent is measured by <code>pictures</code>, <code>background</code>, and <code>loveskids</code>.</li>
+<li>The <code>inperson</code> latent is measured by <code>energy</code>, <code>wagstail</code>, and <code>playful</code>.</li>
+<li>Analyze the two-factor model with the <code>cfa()</code> function.</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="fix-the-latent-heywood-model" class="level1">
+<h1>Fix the Latent Heywood Model</h1>
+<p>In the last exercise, you found that the adoption survey had a correlation &gt; 1 on the latent variable. You should fix the Heywood case by collapsing the two latent variables into one latent variable. Then you should analyze and summarize the model to explore if merging these two factors into one has solved the problematic correlation.</p>
+<div class="callout callout-style-default callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Instructions
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>Change the model to create only one <code>goodstory</code> factor that is measured by all six manifest variables in the <code>adoptsurvey</code> dataset.</li>
+<li>Analyze the model with the <code>cfa()</code> function to ensure there are no error messages.</li>
+<li>Run the <code>summary()</code> for the model to view the final model fit.</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="analyze-a-manifest-heywood-case" class="level1">
+<h1>Analyze a Manifest Heywood Case</h1>
+<p>After reporting your findings, the adoption group recreated their survey to measure two factors: how effective their online story posts were in <code>goodstory</code> and how much an <code>inperson</code> interaction mattered. The new data is loaded under <code>adoptsurvey</code>. In this exercise, you will look for a Heywood cases on one of the manifest variables, rather than on the latent variable.</p>
+<div class="callout callout-style-default callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Instructions
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>Analyze the updated data <code>adoptsurvey</code> for the two factor <code>adopt.model</code> with the <code>cfa()</code> function.</li>
+<li>Watch for warnings after the <code>cfa()</code> has been analyzed.</li>
+<li>Use the <code>summary()</code> function to explore which manifest variable is problematic.</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="fix-the-manifest-heywood-model" class="level1">
+<h1>Fix the Manifest Heywood Model</h1>
+<p>To fix the error in the last model, we can use the <code>var()</code> function to calculate the variance of the manifest variable that is estimated as negative. Add a new line to the model specification code that sets the variance of the manifest variable and reanalyze the model to determine if the new adoption survey can be fit to a two-factor model. You should see that the model does not produce errors after fixing the variance for the problem manifest variable.</p>
+<div class="callout callout-style-default callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Instructions 1/4
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Update the <code>summary()</code> function to view the R squared values.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Instructions 2/4
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Use the <code>var()</code> function to calculate the variance of the negative manifest variable in <code>adoptsurvey</code>.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Instructions 3/4
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Update the model code to set that variance to a specific number.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Instructions 4/4
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Analyze and summarize the updated model with R squared values.</p>
+</div>
+</div>
+</section>
+<section id="basic-sem-diagram" class="level1">
+<h1>Basic SEM Diagram</h1>
+<p>The adoption group are not statisticians, so it would help them understand your work if you could create a picture of their model. The previous two-factor model of <code>goodstory</code> and <code>inperson</code> has been loaded for you.</p>
+<p>Create a basic plot of the model using the <code>semPlot</code> library and the <code>semPaths()</code> function with the default output. The model plot should have two circles for the latents, and six squares for the manifest variables.</p>
+<div class="callout callout-style-default callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Instructions
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>Load the <code>semPlot</code> library.</li>
+<li>Use the <code>semPaths()</code> function where the object is saved analyzed model <code>adopt.fit</code>.</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="edit-the-layout" class="level1">
+<h1>Edit the Layout</h1>
+<p>The <code>tree</code> layout in <code>semPaths()</code> is the default view, where the <code>rotation</code> is set to <code>1</code>. Setting the <code>rotation</code> to <code>2</code> can often help non-statisticians understand models because the model reads left to right, where the latent variables on the left predict the responses to the manifest variables on the right. Update the model picture to use these settings.</p>
+<div class="callout callout-style-default callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Instructions
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>Add the <code>layout</code> argument to the <code>semPaths()</code> function.</li>
+<li>Add the <code>rotation</code> argument to the <code>semPaths()</code> function.</li>
+<li>Set <code>layout</code> equal to <code>"tree"</code> and <code>rotation</code> equal to <code>2</code>.</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="edit-the-labels" class="level1">
+<h1>Edit the Labels</h1>
+<p>The adoption group wants to perfect their survey for future use. To help them understand the results, you can add labels to the paths to indicate which items were the most related to their latent variables.</p>
+<p>You can shade those labels by strength to add more data visualization to the model picture. You should see that the <code>goodstory</code> manifest variables are much stronger than the <code>inperson</code> variables.</p>
+<div class="callout callout-style-default callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Instructions
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>Use the <code>whatLabels</code> argument to show the standardized loadings.</li>
+<li>Use the <code>what</code> argument to color by the standardized loadings.</li>
+<li>Use the <code>edge.color</code> argument to color the model <code>blue</code>.</li>
+</ul>
+</div>
+</div>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

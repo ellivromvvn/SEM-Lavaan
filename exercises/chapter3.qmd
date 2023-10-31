@@ -6,3 +6,128 @@ editor: visual
 ---
 
 Structural equation models do not always run smoothly, and in this chapter, you will learn how to troubleshoot Heywood cases which are common errors. You will also learn how to diagram your model in R using the semPlot library.
+
+# Analyze a Latent Heywood Case
+
+A local animal shelter has designed a survey to measure the impact of their Adopt Me program. Viewers rated each dog's picture, background story, and other characteristics to indicate the "adoptableness" of each animal.
+
+The `adoptsurvey` data contains the six items they rated including `pictures`, `background`, `loveskids` that measure a "good story" latent variable, while `energy`, `wagstail`, `playful` measure an "in person" latent variable. You will build a two-factor model of their survey and examine it for Heywood cases. The `lavaan` library has been loaded for you.
+
+::: {.callout-note icon="false"}
+
+## Instructions
+
+- The `goodstory` latent is measured by `pictures`, `background`, and `loveskids`.
+- The `inperson` latent is measured by `energy`, `wagstail`, and `playful`.
+- Analyze the two-factor model with the `cfa()` function.
+
+:::
+
+# Fix the Latent Heywood Model
+
+In the last exercise, you found that the adoption survey had a correlation > 1 on the latent variable. You should fix the Heywood case by collapsing the two latent variables into one latent variable. Then you should analyze and summarize the model to explore if merging these two factors into one has solved the problematic correlation.
+
+::: {.callout-note icon="false"}
+
+## Instructions
+
+- Change the model to create only one `goodstory` factor that is measured by all six manifest variables in the `adoptsurvey` dataset.
+- Analyze the model with the `cfa()` function to ensure there are no error messages.
+- Run the `summary()` for the model to view the final model fit.
+
+:::
+
+# Analyze a Manifest Heywood Case
+
+After reporting your findings, the adoption group recreated their survey to measure two factors: how effective their online story posts were in `goodstory` and how much an `inperson` interaction mattered. The new data is loaded under `adoptsurvey`. In this exercise, you will look for a Heywood cases on one of the manifest variables, rather than on the latent variable.
+
+::: {.callout-note icon="false"}
+
+## Instructions
+
+- Analyze the updated data `adoptsurvey` for the two factor `adopt.model` with the `cfa()` function.
+- Watch for warnings after the `cfa()` has been analyzed.
+- Use the `summary()` function to explore which manifest variable is problematic.
+
+:::
+
+# Fix the Manifest Heywood Model
+
+To fix the error in the last model, we can use the `var()` function to calculate the variance of the manifest variable that is estimated as negative. Add a new line to the model specification code that sets the variance of the manifest variable and reanalyze the model to determine if the new adoption survey can be fit to a two-factor model. You should see that the model does not produce errors after fixing the variance for the problem manifest variable.
+
+::: {.callout-note icon="false"}
+
+## Instructions 1/4
+
+Update the `summary()` function to view the R squared values.
+
+:::
+
+::: {.callout-note icon="false"}
+
+## Instructions 2/4
+
+Use the `var()` function to calculate the variance of the negative manifest variable in `adoptsurvey`.
+
+:::
+
+::: {.callout-note icon="false"}
+
+## Instructions 3/4
+
+Update the model code to set that variance to a specific number.
+
+:::
+
+::: {.callout-note icon="false"}
+
+## Instructions 4/4
+
+Analyze and summarize the updated model with R squared values.
+
+:::
+
+# Basic SEM Diagram
+
+The adoption group are not statisticians, so it would help them understand your work if you could create a picture of their model. The previous two-factor model of `goodstory` and `inperson` has been loaded for you.
+
+Create a basic plot of the model using the `semPlot` library and the `semPaths()` function with the default output. The model plot should have two circles for the latents, and six squares for the manifest variables.
+
+::: {.callout-note icon="false"}
+
+## Instructions
+
+- Load the `semPlot` library.
+- Use the `semPaths()` function where the object is saved analyzed model `adopt.fit`.
+
+:::
+
+# Edit the Layout
+
+The `tree` layout in `semPaths()` is the default view, where the `rotation` is set to `1`. Setting the `rotation` to `2` can often help non-statisticians understand models because the model reads left to right, where the latent variables on the left predict the responses to the manifest variables on the right. Update the model picture to use these settings.
+
+::: {.callout-note icon="false"}
+
+## Instructions
+
+- Add the `layout` argument to the `semPaths()` function.
+- Add the `rotation` argument to the `semPaths()` function.
+- Set `layout` equal to `"tree"` and `rotation` equal to `2`.
+
+:::
+
+# Edit the Labels
+
+The adoption group wants to perfect their survey for future use. To help them understand the results, you can add labels to the paths to indicate which items were the most related to their latent variables.
+
+You can shade those labels by strength to add more data visualization to the model picture. You should see that the `goodstory` manifest variables are much stronger than the `inperson` variables.
+
+::: {.callout-note icon="false"}
+
+## Instructions
+
+- Use the `whatLabels` argument to show the standardized loadings.
+- Use the `what` argument to color by the standardized loadings.
+- Use the `edge.color` argument to color the model `blue`.
+
+:::
