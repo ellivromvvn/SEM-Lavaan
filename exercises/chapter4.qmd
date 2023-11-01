@@ -1,0 +1,113 @@
+---
+title: "Chapter 4: Full Example and an Extension"
+author: "Orville Hombrebueno"
+format: html
+editor: visual
+---
+
+This chapter examines the WAIS-III IQ Scale and its structural properties. You will use your skills from the first three chapters to create various models of the WAIS-III, troubleshoot errors in those models, and create diagrams of the final model.
+
+# Create a Four-Factor Model
+
+The WAIS-III IQ scale has a proposed four-factor model structure with verbal comprehension, working memory, perceptual organization, and processing speed. You should analyze this structure to determine if the model fits the data and that there are no problems with the model. In this exercise, you should find a Heywood case that indicates potential problems with the model.
+
+The data has been loaded for you and is called `IQdata`. You can view the data using `head(IQdata)`.
+
+::: {.callout-note icon="false"}
+
+## Instructions
+
+- Perceptual organization should include `piccomp`, `block`, and `matrixreason`.
+- Processing speed should include `digsym` and `symbolsearch`.
+- Analyze the model with the `cfa()` function.
+- Summarize the model with the `summary()` function.
+
+:::
+
+# Update the Model
+
+The current model of the WAIS-III indicated a Heywood case between perceptual organization and processing speed. To fix a highly correlated set of latent variables, you should collapse those two variables into one latent variable. You should make a `performance` variable that combines the manifest variables for the `perceptorg` and `processing` latent variables.
+
+The data has been loaded for you and is called `IQdata`. You can view the data using `head(IQdata)`.
+
+::: {.callout-note icon="false"}
+
+## Instructions
+
+- Edit the four-factor model to include one `performance` variable measured by `piccomp`, `block`, `matrixreason`, `digsym`, and `symbolsearch`.
+- Use the `cfa()` function to analyze the model for any new errors.
+- Summarize the model to determine model fit with the standardized solution and fit indices.
+
+:::
+
+# Diagram the Final Model
+
+To help visualize our new WAIS-III model, we can use the `semPlot` library to create a picture of the three-factor model. You will want to include labels and shading to accent the strongest paths in the model, which helps visualize the manifest variables that are best at measuring the latent variable.
+
+::: {.callout-note icon="false"}
+
+## Instructions
+
+- Load the `semPlot` library.
+- Include the standardized loadings as labels with `whatLabels` and shading with what.
+- Shade the diagram in black in the `edge.color` argument.
+
+:::
+
+# Add Paths to Improve Fit
+
+The three-factor model of the WAIS-III showed poor fit when examining the fit indices. You can use the modification indices to view potential parameter estimates to add to the model to improve fit. Correlated error terms are normal estimates to add, as the variance of the manifest variables on the same factor can be related to each other.
+
+The data has been loaded for you and is called `IQdata`. You can view the data using `head(IQdata)`.
+
+::: {.callout-note icon="false"}
+
+## Instructions
+
+- View the modification indices output and add the highest `mi` value to update the model.
+- Analyze and summarize the updated model by printing out the standardized solution and fit indices.
+
+:::
+
+# Compare Models
+
+In the last exercise, you added a new parameter to control for correlated error between the `information` and `similarity` manifest variables. The fit indices appeared to improve over the original model. However, you should use the `anova()` function and the `aic` and `ecvi` fit indices outlined previously to help determine if model fit was significantly improved.
+
+::: {.callout-note icon="false"}
+
+## Instructions
+
+- Compare `wais.fit` and `wais.fit2` analyzed models using the `anova()` function.
+- Use the `fitmeasures()` function on both models to print out the `aic` and `ecvi` fit indices.
+
+:::
+
+# Create a Hierarchical Model
+
+The underlying theory about intelligence states that a general IQ factor predicts performance on the verbal comprehension, working memory, and perceptual organization subfactors. Therefore, you should create a hierarchical model that demonstrates that relationship between the second order latent variable and the first layer of latent variables.
+
+The data has been loaded for you and is called `IQdata`. You can view the data using `head(IQdata)`.
+
+::: {.callout-note icon="false"}
+
+## Instructions
+
+- Create a `general` latent variable that is composed of `verbalcomp`, `workingmemory`, and `perceptorg`.
+- Analyze the hierarchical model using the `cfa()` function.
+- Use the `fitmeasures()` function to view the `rmsea` and `srmr` fit indices to show no changes in fit in the model.
+
+:::
+
+# Diagram the Hierarchical Model
+
+Data visualization allows you to examine and share completed models, and the `semPlot` package is an excellent tool for creating these diagrams. Using `wais.fit3` from the previous exercise, diagram the hierarchical model with options to help reading clarity.
+
+::: {.callout-note icon="false"}
+
+## Instructions
+
+- Create a diagram that includes labels and shading of the standardized loadings.
+- Shade the standardized loadings in `navy`.
+- Use the `tree` layout with `1` option for the rotation.
+
+:::
